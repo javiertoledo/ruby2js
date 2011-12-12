@@ -1,0 +1,15 @@
+#!/usr/bin/ruby -s
+
+require 'rubygems'
+require 'ruby2js'
+
+# TODO: Create a File compiler using ruby2js library that compiles ARGV[0] .rb to .js
+# Check the file exists and has rb extension
+if ARGV[0] =~ /(.+)\.rb$/ && File.exists?(ARGV[0])                   
+  puts "Compiling Ruby file #{ARGV[0]} into JavaScript file #{$1}.js"
+  File.open("#{$1}.js", "w") do |f|
+    f.write Ruby2js::Translator.new(File.read(ARGV[0])).to_js
+  end                                                            
+else
+  puts "ERROR: Selected file does not exist or is not a Ruby script"
+end
